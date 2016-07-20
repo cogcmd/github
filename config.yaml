@@ -1,0 +1,21 @@
+---
+cog_bundle_version: 3
+
+name: github
+version: 0.0.1
+description: Interact with github
+# docker:
+#   image: cogcmd/github
+#   tag: 0.0.1
+permissions:
+  - github:read
+  - github:write
+commands:
+  stars:
+    executable: /Users/vanstee/Code/cogcmd/github/cog-command
+    # executable: /home/bundle/cog-command
+    description: List stars for a repo
+    documentation: |
+      github:stars <repo> - List stars for a specific repo
+    rules:
+      - must have github:read
