@@ -11,6 +11,39 @@ permissions:
   - github:read
   - github:write
 commands:
+  commit:
+    executable: /Users/vanstee/Code/cogcmd/github/cog-command
+    # executable: /home/bundle/cog-command
+    description: List commits for a repo
+    documentation: |
+      github:commit [list] [branch] [--before=<before>] [--after=<after>] [--today] [-yesterday] [--this-week] [--last-week] [--this-month] --repo=<repo>
+    rules:
+      - must have github:read
+    options:
+      repo:
+        type: string
+        required: true
+      before:
+        type: string
+        required: false
+      after:
+        type: string
+        required: false
+      today:
+        type: bool
+        required: false
+      yesterday:
+        type: bool
+        required: false
+      this-week:
+        type: bool
+        required: false
+      last-week:
+        type: bool
+        required: false
+      this-month:
+        type: bool
+        required: false
   pr:
     executable: /Users/vanstee/Code/cogcmd/github/cog-command
     # executable: /home/bundle/cog-command
