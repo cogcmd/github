@@ -1,7 +1,7 @@
 require "cog/command"
 require_relative "helpers"
 
-class CogCmd::Github::Stars < Cog::Command
+class CogCmd::Github::Stargazers < Cog::Command
   include CogCmd::Github::Helpers
 
   def run_command

@@ -11,11 +11,11 @@ permissions:
   - github:read
   - github:write
 commands:
-  stars:
+  stargazers:
     executable: /Users/vanstee/Code/cogcmd/github/cog-command
     # executable: /home/bundle/cog-command
-    description: List stars for a repo
+    description: List stargazers for a repo
     documentation: |
-      github:stars <repo> - List stars for a specific repo
+      github:stargazers <repo> - List stargazers for a repo
     rules:
       - must have github:read
