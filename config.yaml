@@ -11,11 +11,36 @@ permissions:
   - github:read
   - github:write
 commands:
-  stargazers:
+  pr:
     executable: /Users/vanstee/Code/cogcmd/github/cog-command
     # executable: /home/bundle/cog-command
     description: List stargazers for a repo
     documentation: |
-      github:stargazers <repo> - List stargazers for a repo
+      github:pr [list] [--open] [--closed] [--all] --repo=<repo> - List pull requests for a repo
     rules:
       - must have github:read
+    options:
+      repo:
+        type: string
+        required: true
+      open:
+        type: bool
+        required: false
+      closed:
+        type: bool
+        required: false
+      all:
+        type: bool
+        required: false
+  stargazer:
+    executable: /Users/vanstee/Code/cogcmd/github/cog-command
+    # executable: /home/bundle/cog-command
+    description: List stargazers for a repo
+    documentation: |
+      github:stargazer --repo=<repo> - List stargazers for a repo
+    rules:
+      - must have github:read
+    options:
+      repo:
+        type: string
+        required: true
