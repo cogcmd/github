@@ -32,6 +32,22 @@ commands:
       all:
         type: bool
         required: false
+  repo:
+    executable: /Users/vanstee/Code/cogcmd/github/cog-command
+    # executable: /home/bundle/cog-command
+    description: List or display information about repos
+    documentation: |
+      github:repo [list] [--user=<user>] [--org=<org>]
+      github:repo info --repo=<repo>
+    rules:
+      - must have github:read
+    options:
+      user:
+        type: string
+        required: false
+      org:
+        type: string
+        required: false
   stargazer:
     executable: /Users/vanstee/Code/cogcmd/github/cog-command
     # executable: /home/bundle/cog-command

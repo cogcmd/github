@@ -48,8 +48,4 @@ class CogCmd::Github::Pr < Cog::Command
   def open?
     request.options["open"]
   end
-
-  def number
-    request.args.first
-  end
 end
