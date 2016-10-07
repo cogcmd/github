@@ -1,6 +1,6 @@
-FROM alpine:3.3
+FROM alpine:3.4
 
-RUN apk -U add ca-certificates ruby ruby-bundler ruby-dev ruby-io-console ruby-builder ruby-irb ruby-rdoc ruby-json ruby-bigdecimal build-base git
+RUN apk -U add ca-certificates ruby ruby-bundler ruby-dev ruby-io-console ruby-irb ruby-rdoc ruby-json
 
 # Setup bundle user and directory
 RUN adduser -h /home/bundle -D bundle && \
@@ -9,14 +9,16 @@ RUN adduser -h /home/bundle -D bundle && \
 
 # Copy the bundle source to the image
 WORKDIR /home/bundle
-COPY . /home/bundle
+COPY Gemfile Gemfile.lock /home/bundle/
 
-# Install the bundle, and remove git and the build tooling to recover
-# some space
-RUN su bundle -c 'bundle install --path .bundle' && \
-    apk del build-base && \
+# Install Git, run Bundler, and uninstall Git to recover space
+RUN apk add git && \
+    su bundle -c 'bundle install --path .bundle' && \
     apk del git && \
     rm -f /var/cache/apk/*
+
+# Copy rest of code
+COPY . /home/bundle
 
 # Drop privileges
 USER bundle
