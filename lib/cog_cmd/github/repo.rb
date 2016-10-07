@@ -22,6 +22,7 @@ class CogCmd::Github::Repo < Cog::Command
       repos = org_repos(org)
     end
 
+
     write_json(repos)
   end
 
@@ -35,7 +36,7 @@ class CogCmd::Github::Repo < Cog::Command
     options = {}
 
     if state
-      options[:state] = state 
+      options[:state] = state
     end
 
     github.pull_requests(repo, options).map(&:to_h)

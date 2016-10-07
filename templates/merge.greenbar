@@ -1,0 +1,6 @@
+~if cond=$results[0].message not_empty?~
+~$results[0].message~
+~end~
+~if cond=$results[0].sha bound?~
+Merged branch **~$results[0].src~** into **~$results[0].dest~** in repository **~$results[0].repo~**.
+~end~

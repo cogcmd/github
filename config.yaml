@@ -1,24 +1,46 @@
 ---
-cog_bundle_version: 3
-
+cog_bundle_version: 4
 name: github
-version: 0.0.1
+version: 0.1.0
 description: Interact with github
-# docker:
-#   image: cogcmd/github
-#   tag: 0.0.1
+docker:
+  image: cogcmd/github
+  tag: 0.1.0
 permissions:
-  - github:read
-  - github:write
+- github:read
+- github:write
 commands:
-  commit:
-    executable: /Users/vanstee/Code/cogcmd/github/cog-command
-    # executable: /home/bundle/cog-command
-    description: List commits for a repo
-    documentation: |
-      github:commit [list] [branch] [--before=<before>] [--after=<after>] [--today] [-yesterday] [--this-week] [--last-week] [--this-month] --repo=<repo>
+  merge:
+    executable: "/home/bundle/cog-command"
+    description: Merge a source branch into a destination branch
     rules:
-      - must have github:read
+    - must have github:write
+    options:
+      repo:
+        description: Repository to use for merge
+        type: string
+        required: true
+      src:
+        description: Source branch
+        type: string
+        required: true
+      dest:
+        description: Destionation branch
+        type: string
+        required: true
+      message:
+        description: Commit message for merge commit
+        type: string
+        required: true
+  commit:
+    executable: "/home/bundle/cog-command"
+    description: List commits for a repo
+    documentation: 'github:commit [list] [branch] [--before=<before>] [--after=<after>]
+      [--today] [-yesterday] [--this-week] [--last-week] [--this-month] --repo=<repo>
+
+'
+    rules:
+    - must have github:read
     options:
       repo:
         type: string
@@ -45,13 +67,14 @@ commands:
         type: bool
         required: false
   pr:
-    executable: /Users/vanstee/Code/cogcmd/github/cog-command
-    # executable: /home/bundle/cog-command
+    executable: "/home/bundle/cog-command"
     description: List stargazers for a repo
-    documentation: |
-      github:pr [list] [--open] [--closed] [--all] --repo=<repo> - List pull requests for a repo
+    documentation: 'github:pr [list] [--open] [--closed] [--all] --repo=<repo> - List
+      pull requests for a repo
+
+'
     rules:
-      - must have github:read
+    - must have github:read
     options:
       repo:
         type: string
@@ -66,14 +89,13 @@ commands:
         type: bool
         required: false
   repo:
-    executable: /Users/vanstee/Code/cogcmd/github/cog-command
-    # executable: /home/bundle/cog-command
+    executable: "/home/bundle/cog-command"
     description: List or display information about repos
     documentation: |
       github:repo [list] [--user=<user>] [--org=<org>]
       github:repo info --repo=<repo>
     rules:
-      - must have github:read
+    - must have github:read
     options:
       user:
         type: string
@@ -82,14 +104,23 @@ commands:
         type: string
         required: false
   stargazer:
-    executable: /Users/vanstee/Code/cogcmd/github/cog-command
-    # executable: /home/bundle/cog-command
+    executable: "/home/bundle/cog-command"
     description: List stargazers for a repo
-    documentation: |
-      github:stargazer --repo=<repo> - List stargazers for a repo
+    documentation: 'github:stargazer --repo=<repo> - List stargazers for a repo
+
+'
     rules:
-      - must have github:read
+    - must have github:read
     options:
       repo:
         type: string
         required: true
+templates:
+  merge:
+    body: |
+      ~if cond=$results[0].message not_empty?~
+      ~$results[0].message~
+      ~end~
+      ~if cond=$results[0].sha bound?~
+      Merged branch **~$results[0].src~** into **~$results[0].dest~** in repository **~$results[0].repo~**.
+      ~end~
